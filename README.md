@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/lyoko17220/FirecoWorker.svg?branch=master)](https://travis-ci.org/lyoko17220/FirecoUpdater)
 
-Container applicatif de Fireco
+Container applicatif de l'app Fireco
 
 ## Concept
 
