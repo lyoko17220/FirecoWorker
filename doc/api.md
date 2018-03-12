@@ -14,17 +14,13 @@ Ajout d'un utilisateur à la base de données.
 
 #### Paramètres
 
- * `username` - *Pseudo de l'utilisateur*
- 
+ *`username` - *Pseudo de l'utilisateur*
    **Requis** : [1 - 20 chaine de caractères]
  * `lastname`- *Nom de l'utilisateur*
- 
    **Requis** : [1 - 32 lettres, -]
  * `firstname` - *Prénom de l'utilisateur*
- 
    **Requis** : [1 - 32 lettres, -]
  * `password` - *Mot de passe de l'utilisateur*
- 
    **Requis** : [6 - 15 string]
 
 #### Succès
@@ -74,11 +70,10 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 #### Paramètres
 
- - `username` - *Nom d'utilisateur*
- 
+ -`username` - *Nom d'utilisateur*
    **Requis :** champ non vide
- - `password` - *Mot de passe de l'utilisateur*
- 
+
+ -`password` - *Mot de passe de l'utilisateur*
    **Requis :** champ non vide
 
 #### Succès
@@ -115,6 +110,189 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 
 
+## Gestion des dossiers `/api/folders`
+
+### Créer un dossier
+
+Création directe du dossier sur la mémoire du serveur. Authentification requise, droits selon le chemin d'accès requis.
+
+​	**URL :** `/api/folders/create`
+
+​	**Methode :** `POST`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+
+- `disk` - *Volume contenant les fichiers du serveur*
+  **Requis :** Volume existant et connecté au serveur
+
+
+- `folder` - *Chemin d'accès du répertoire, facultatif*
+  **Requis :** Chemin d'accès existant et correct
+- `folder_name` - *Nom du dossier à créer*
+  **Requis :** [1 - 15 string]
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+#### Erreurs
+
+​	**Condition :** Le chemin d'accès est incorrect.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Le chemin d'accès est incorrect."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
+
+
+
+### Supprimer un fichier
+
+Suppression directe du dossier et de son contenu sur la mémoire du serveur. Authentification requise, droits selon le chemin d'accès requis.
+
+​	**URL :** `/api/folders/delete`
+
+​	**Methode :** `DELETE`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+
+- `disk` - *Volume contenant les fichiers du serveur*
+  **Requis :** Volume existant et connecté au serveur
+
+
+- `folder` - *Chemin d'accès du répertoire, facultatif*
+  **Requis :** Chemin d'accès existant et correct
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+#### Erreurs
+
+​	**Condition :** Le dossier n'existe pas, chemin d'accès incorrect.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Le dossier n'existe pas ou le chemin d'accès est incorrect."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
+
+
+
+### Renommer un dossier
+
+Renommer directement un fichier présent sur le serveur. Authentification et droits sur le fichier obligatoires.
+
+​	**URL :** `/api/folders/rename`
+
+​	**Methode :** `POST`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+
+- `disk` - *Volume contenant les fichiers du serveur*
+  **Requis :** Volume existant et connecté au serveur
+
+
+- `folder` - *Chemin d'accès du répertoire, facultatif*
+  **Requis :** Chemin d'accès existant et correct
+- `old_folder_name` - *Ancien nom du dossier à renommer*
+  **Requis :** Dossier existant et nom correct
+- `new_folder_name` - *Nouveau nom du dossier à renommer*
+  **Requis :** [1 - 32 string], nom correct
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "message" : "Le dossier a été renommé"
+}
+```
+
+
+
+#### Erreurs
+
+​	**Condition :** Le dossier n'existe pas, chemin d'accès incorrect.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Le dossier n'existe pas ou le chemin d'accès est incorrect."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
+
+
+
 ## Gestion des fichiers `/api/files`
 
 ### Demande de téléversement
@@ -127,17 +305,16 @@ Demande d'adresse pour téléversement d'un fichier. Authentification obligatoir
 
 #### Paramètres
 
-* `user_token` - *Jeton associé à un utilisateur de la base de données*
+- `user_token` - *Jeton associé à un utilisateur de la base de données*
+  **Requis :** Utilisateur connecté
 
-   **Requis :** Utilisateur connecté
 * `disk` - *Volume contenant les fichiers du serveur*
-
    **Requis :** Volume existant et connecté au serveur
-* `folder` - *Chemin d'accès au répertoire de téléversement*
-  
-   **Requis :** Chemin existant
-* `file_name` - *Nom du fichier à téléverser*
 
+* `folder` - *Chemin d'accès du fichier à téléverser*
+   **Requis :** Chemin existant
+
+* `file_name` - *Nom du fichier à téléverser*
    **Requis :** Nom de fichier correcte
 
 
@@ -240,19 +417,17 @@ Demande d'adresse pour téléchargement d'un fichier. Authentification et droits
 #### Paramètres
 
 - `user_token` - *Jeton assocé à l'utilisateur*
-
   **Requis :** Utilisateur connecté
+
+
 - `disk` - *Volume contenant les fichiers du serveur*
-   
-   **Requis :** Volume existant et connecté au serveur
-- `folder` - *Chemin d'accès au répertoire de téléchargement*
+  **Requis :** Volume existant et connecté au serveur
 
-   **Requis :** Chemin d'accès correct et existant
+- `folder` - *Chemin d'accès du fichier à télécharger*
+   **Requis :** Chemin d'accès existant et correct
 - `file_name` - *Nom du fichier à télécharger*
-
    **Requis :** Fichier existant et nom correct
 - `timeout` - *Durée de vie du lien*
-
    **Requis :** [int]
 
 #### Succès
@@ -354,23 +529,33 @@ Suppression directe du fichier sur la mémoire du serveur. Authentification et d
 #### Paramètres
 
 - `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
 
-   **Requis :** Utilisateur connecté
+
 - `disk` - *Volume contenant les fichiers du serveur*
+  **Requis :** Volume existant et connecté au serveur
 
-   **Requis :** Volume existant et connecté au serveur
-- `folder` - *Chemin d'accès au répertoire de téléchargement*
 
-   **Requis :** Chemin d'accès correct et existant
-- `file_name` - *Nom du fichier à télécharger*
-
-   **Requis :** Fichier existant et nom correct
+- `folder` - *Chemin d'accès du fichier à supprimer*
+  **Requis :** Chemin d'accès existant et correct
+- `file_name` - *Nom du fichier à supprimer*
+  **Requis :** Fichier existant et nom correct
 
 #### Succès
 
 ​	**Conditions :** Toutes les conditions sont correctes et remplies.
 
 ​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "message" : "Le fichier a été supprimé"
+}
+```
+
+
 
 #### Erreurs
 
@@ -397,4 +582,75 @@ Suppression directe du fichier sur la mémoire du serveur. Authentification et d
     "message" : "Une authentification est requise pour effectuer cette action."
 }
 ```
+
+
+
+### Renommer un fichier
+
+Renommer directement un fichier présent sur le serveur. Authentification et droits sur le fichier obligatoires.
+
+​	**URL :** `/api/files/rename`
+
+​	**Methode :** `POST`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+
+- `disk` - *Volume contenant les fichiers du serveur*
+  **Requis :** Volume existant et connecté au serveur
+
+
+- `folder` - *Chemin d'accès du fichier à renommer*
+  **Requis :** Chemin d'accès existant et correct
+- `old_file_name` - *Ancien nom du fichier à renommer*
+  **Requis :** Fichier existant et nom correct
+- `new_file_name` - *Nouveau nom du fichier à renommer*
+  **Requis :** [1 - 32 string], nom correct
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "message" : "Le fichier a bien été renommé"
+}
+```
+
+
+
+#### Erreurs
+
+​	**Condition :** Le fichier n'existe pas, chemin d'accès incorrect.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Le fichier n'existe pas ou le chemin d'accès est incorrect."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
+
+### 
 
