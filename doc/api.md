@@ -14,7 +14,7 @@ Ajout d'un utilisateur à la base de données.
 
 #### Paramètres
 
-- `username` - *Pseudo de l'utilisateur
+- `username` - *Pseudo de l'utilisateur*
   **Requis** : [1 - 20 chaine de caractères]
  * `lastname`- *Nom de l'utilisateur*
    **Requis** : [1 - 32 lettres, -]
@@ -169,7 +169,7 @@ Création directe du dossier sur la mémoire du serveur. Authentification requis
 
 
 
-### Supprimer un fichier
+### Supprimer un dossier
 
 Suppression directe du dossier et de son contenu sur la mémoire du serveur. Authentification requise, droits selon le chemin d'accès requis.
 
@@ -652,5 +652,66 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 }
 ```
 
-### 
+
+
+### Gestion des périphériques `/api/devices`
+
+#### Lister les périphériques
+
+Liste les périphériques connectés au serveur. Authentification requise.
+
+**URL :** `/api/devices/list`
+
+​	**Methode :** `GET`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "devices" : [{
+        "name" : "Clé USB",
+        "storage" : 8000,
+        "system_name" : "F:"
+    }]
+}
+```
+
+
+
+#### Erreurs
+
+​	**Condition :** Aucun périphérique connecté.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Il n'y a aucun périphérique connecté au serveur."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
 
