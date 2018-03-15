@@ -14,8 +14,8 @@ Ajout d'un utilisateur à la base de données.
 
 #### Paramètres
 
- *`username` - *Pseudo de l'utilisateur*
-   **Requis** : [1 - 20 chaine de caractères]
+- `username` - *Pseudo de l'utilisateur
+  **Requis** : [1 - 20 chaine de caractères]
  * `lastname`- *Nom de l'utilisateur*
    **Requis** : [1 - 32 lettres, -]
  * `firstname` - *Prénom de l'utilisateur*
@@ -64,7 +64,7 @@ Ajout d'un utilisateur à la base de données.
 
 Authentification d'un utilisateur existant dans la base de données. Il faut que le "couple" `username` - `password` existe dans la base de données.
 
-​	**URL :** `/api/users/login`
+​	**URL :** `/api/user/login`
 
 ​	**Methode :** `GET`
 
