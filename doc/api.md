@@ -230,7 +230,7 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 ​	**URL :** `/api/folders/rename`
 
-​	**Methode :** `POST`
+​	**Methode :** `PUT`
 
 #### Paramètres
 
@@ -591,7 +591,7 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 ​	**URL :** `/api/files/rename`
 
-​	**Methode :** `POST`
+​	**Methode :** `PUT`
 
 #### Paramètres
 
@@ -683,6 +683,11 @@ Liste les périphériques connectés au serveur. Authentification requise.
         "name" : "Clé USB",
         "storage" : 8000,
         "system_name" : "F:"
+    },
+                 {
+        "name" : "Clé USB2",
+        "storage" : 16000,
+        "system_name" : "D:"
     }]
 }
 ```
