@@ -2,13 +2,13 @@
 
 
 
-## Gestion utilisateurs `/api/user`
+## Gestion utilisateurs `/api/users`
 
 ### Inscription
 
 Ajout d'un utilisateur à la base de données.
 
-​	**URL :**  `/api/user/sign`
+​	**URL :**  `/api/users/sign`
 
 ​	**Methode :** `POST`
 
@@ -64,7 +64,7 @@ Ajout d'un utilisateur à la base de données.
 
 Authentification d'un utilisateur existant dans la base de données. Il faut que le "couple" `username` - `password` existe dans la base de données.
 
-​	**URL :** `/api/user/login`
+​	**URL :** `/api/users/login`
 
 ​	**Methode :** `GET`
 
