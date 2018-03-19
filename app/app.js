@@ -1,4 +1,5 @@
-require('dbconnect');
+require('./db/dbconnect');
+
 const express = require('express'),
 	app = express(),
 	bodyParser = require('body-parser'),
@@ -16,3 +17,4 @@ app.use('/api', api);
 app.listen(port, () => {
 	console.log('API started on port : ' + port);
 });
+

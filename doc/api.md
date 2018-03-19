@@ -66,7 +66,7 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 ​	**URL :** `/api/user/login`
 
-​	**Methode :** `GET`
+​	**Methode :** `POST`
 
 #### Paramètres
 
