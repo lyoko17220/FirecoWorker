@@ -3,7 +3,7 @@ FROM resin/rpi-raspbian:latest
 
 RUN \
     apt-get update  && \
-    apt-get install nodejs && \
+    apt-get install npm && \
     npm install -g n && \
     n latest && \
     npm install -g pm2
