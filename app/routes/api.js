@@ -5,23 +5,23 @@ const express = require('express'),
 	files = require('./api/files'),
 	devices = require('./api/devices');
 
-api.get('/users', (req, res) =>{
+api.all('/users', (req, res) =>{
 	res.json('API destinee aux utilisateurs');
 });
 
-api.get('/folders', (req, res) =>{
+api.all('/folders', (req, res) =>{
 	res.json('API destinee aux dossiers');
 });
 
-api.get('/files', (req, res) =>{
+api.all('/files', (req, res) =>{
 	res.json('API destinee aux fichiers');
 });
 
-api.get('/devices', (req, res) =>{
-	res.json('API destinee aux périphériques');
+api.all('/devices', (req, res) =>{
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
-api.get('/', (req, res) =>{
+api.all('/', (req, res) =>{
 	res.send('Erreur 418', 418);
 });
 

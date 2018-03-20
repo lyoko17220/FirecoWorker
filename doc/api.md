@@ -660,7 +660,7 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 Liste les périphériques connectés au serveur. Authentification requise.
 
-**URL :** `/api/devices/list`
+**URL :** `/api/devices`
 
 ​	**Methode :** `GET`
 
