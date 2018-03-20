@@ -3,11 +3,11 @@ sudo: enabled
 services:
   - docker
 
-install:
-  - docker build -t lyoko17220/fireco-worker .
+before_install:
+  - docker run --privileged multiarch/qemu-user-static:register --reset
 
 script:
-  - docker run lyoko17220/fireco-worker
+  - docker build -t lyoko17220/fireco-worker .
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
