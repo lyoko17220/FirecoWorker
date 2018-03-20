@@ -1,9 +1,12 @@
 FROM resin/rpi-raspbian:latest
-FROM node:latest
+
 
 RUN \
-  npm install -g pm2
-  #n latest
+    apt-get update  && \
+    apt-get install nodejs && \
+    npm install -g n && \
+    n latest && \
+    npm install -g pm2
 
 
 ## Conf essentielle
