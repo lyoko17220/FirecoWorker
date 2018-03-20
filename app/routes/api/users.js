@@ -46,7 +46,7 @@ users.post('/login', (req, res) => {
 });
 
 users.get('/', (req, res) => {
-	res.send('Erreur 418', 418);
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 module.exports = users;

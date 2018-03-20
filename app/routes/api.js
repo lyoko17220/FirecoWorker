@@ -6,15 +6,15 @@ const express = require('express'),
 	devices = require('./api/devices');
 
 api.all('/users', (req, res) =>{
-	res.json('API destinee aux utilisateurs');
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 api.all('/folders', (req, res) =>{
-	res.json('API destinee aux dossiers');
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 api.all('/files', (req, res) =>{
-	res.json('API destinee aux fichiers');
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 api.all('/devices', (req, res) =>{
@@ -22,7 +22,7 @@ api.all('/devices', (req, res) =>{
 });
 
 api.all('/', (req, res) =>{
-	res.send('Erreur 418', 418);
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 api.use('/users', users);
