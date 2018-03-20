@@ -3,6 +3,9 @@ sudo: enabled
 services:
   - docker
 
+before_install:
+  - docker run --privileged multiarch/qemu-user-static:register --reset
+
 install:
   - docker build -t lyoko17220/fireco-worker .
 

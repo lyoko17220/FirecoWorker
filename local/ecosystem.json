@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "fireco-worker",
+      "script": "/fireco/app.js",
+      "out_file": "../logs/app.out.log",
+      "exec_mode": "fork_mode",
+      "watch" : true,
+      "autorestart": true,
+      "env": {
+        "PORT": 3000
+      }
+    }
+  ]
+}
