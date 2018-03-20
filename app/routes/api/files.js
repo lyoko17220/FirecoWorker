@@ -1,5 +1,7 @@
 const express = require('express'),
-	files = express.Router();
+	files = express.Router(),
+	multer = require('multer'),
+	Users = require('../../db/schemas/users');
 
 files.post('/upload/request', (req, res) =>{
 	res.json('API destinee a la demande d\'upload d\'un fichier');
