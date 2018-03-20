@@ -6,11 +6,8 @@ services:
 before_install:
   - docker run --privileged multiarch/qemu-user-static:register --reset
 
-install:
-  - docker build -t lyoko17220/fireco-worker .
-
 script:
-  - docker run lyoko17220/fireco-worker
+  - docker build -t lyoko17220/fireco-worker .
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
