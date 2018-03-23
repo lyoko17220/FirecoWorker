@@ -1,7 +1,7 @@
 const express = require('express'),
 	users = express.Router(),
 	Users = require('../../db/schemas/users'),
-	bcrypt = require('bcrypt');
+	bcrypt = require('bcryptjs');
 
 // TODO : Gérer les codes d'erreurs HTML - Gérer la longueur du mot de passe
 users.post('/sign', (req, res) => {

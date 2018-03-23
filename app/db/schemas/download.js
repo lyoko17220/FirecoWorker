@@ -12,3 +12,4 @@ const downloadSchema = new mongoose.Schema({
 });
 
 const Download = mongoose.model('Download', downloadSchema);
+module.exports = Download;
