@@ -20,8 +20,8 @@ WORKDIR /fireco
 CMD cp -r /data/worker/app/* /fireco/ && \
     ls /fireco && \
     npm install && \
+    service mongod start && \
     pm2-runtime start /fireco-local/ecosystem.json && \
-    service mongod start
 
 
 #ENTRYPOINT ["bash"]
