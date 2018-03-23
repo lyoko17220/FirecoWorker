@@ -15,11 +15,14 @@ WORKDIR /fireco-local
 
 
 # Lien Updater
+
+VOLUME /dbmongo
 VOLUME /fireco
 WORKDIR /fireco
 CMD cp -r /data/worker/app/* /fireco/ && \
     ls /fireco && \
     npm install && \
+    mongod --repair --dbpath /dbmongo/ && \
     service mongodb start && \
     pm2-runtime start /fireco-local/ecosystem.json
 
