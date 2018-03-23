@@ -23,7 +23,7 @@ CMD cp -r /data/worker/app/* /fireco/ && \
     ls /fireco && \
     npm install && \
     mongod --repair --dbpath /dbmongo/ && \
-    service mongodb start && \
+    mongod --dbpath /dbmongo/ && \
     pm2-runtime start /fireco-local/ecosystem.json
 
 
