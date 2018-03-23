@@ -6,7 +6,7 @@ RUN \
     apt-get install -y npm mongodb-server && \
     npm install -g n && \
     n latest && \
-    npm install -g pm2 && \
+    npm install -g pm2
 
 
 ## Conf essentielle
@@ -20,7 +20,8 @@ WORKDIR /fireco
 CMD cp -r /data/worker/app/* /fireco/ && \
     ls /fireco && \
     npm install && \
-    pm2-runtime start /fireco-local/ecosystem.json
+    pm2-runtime start /fireco-local/ecosystem.json &&
+    service mongod start
 
 
 #ENTRYPOINT ["bash"]
