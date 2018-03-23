@@ -3,7 +3,7 @@ FROM resin/rpi-raspbian:latest
 
 RUN \
     apt-get update  && \
-    apt-get install -y npm mongodb-server && \
+    apt-get install -y npm mongodb-server gcc*&& \
     npm install -g n && \
     n latest && \
     npm install -g pm2
