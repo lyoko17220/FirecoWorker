@@ -3,6 +3,9 @@ sudo: enabled
 services:
   - docker
 
+cache:
+  bundler: true
+
 before_install:
   - docker run --privileged multiarch/qemu-user-static:register --reset
 
