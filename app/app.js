@@ -9,7 +9,7 @@ const express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) =>{
-	res.send('Erreur 418', 418);
+	res.status(418).send('Oh non, c\'est un cul de sac');
 });
 
 app.use('/api', api);
