@@ -1,0 +1,34 @@
+{% extends "layoutHome.html" %}
+
+{% block home %}
+
+<div class="offset-5 col-2 offset-5">
+
+    <br><br><br><br>
+    <img class="mb-4 img-fluid rounded-circle " src="view/ressources/ICON_PhenixCoaching_rgb.jpg" alt="" width="150"
+         height="150">
+    <h1 class="h3 mb-3 font-weight-normal">FireCo</h1>
+
+    <form>
+        <div class="form-group row">
+
+            <input type="text" id="inputEmail" class="form-control" placeholder="Nom de compte" required autofocus>
+
+        </div>
+        <div class="form-group row">
+
+            <input type="password" id="inputPassword" class="form-control" placeholder="Mot de Passe" required>
+
+        </div>
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="Se souvenir de moi"> Remember me
+            </label>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
+        </div>
+
+    </form>
+</div>
+
+
+{% endblock %}
