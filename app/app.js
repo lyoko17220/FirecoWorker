@@ -11,7 +11,7 @@ const express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(301).redirect('/view');
 });
 
 app.use('/api', api);

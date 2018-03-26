@@ -6,8 +6,6 @@ const express = require('express'),
 	Download = require('../../db/schemas/download'),
 	Users = require('../../db/schemas/users');
 
-express.use(fileupload());
-
 files.get('/upload/request/:user_token', (req, res) =>{
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
