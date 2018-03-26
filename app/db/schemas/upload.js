@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const uploadSchema = new mongoose.Schema({
-	disk: String,
-	folders: String,
+	folder: String,
 	user_token: [{
 		type: mongoose.Schema.Types.ObjectId, ref: 'users'
 	}],

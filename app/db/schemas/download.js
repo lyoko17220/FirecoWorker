@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const downloadSchema = new mongoose.Schema({
-	disk: String,
-	folders: String,
+	filename: String,
+	folder: String,
 	user_token: [{
-		type: mongoose.Schema.Types.ObjectId, ref: 'users'
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'users'
 	}],
 	token: String,
 	period_start: Date,
