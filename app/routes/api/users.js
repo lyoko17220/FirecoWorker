@@ -1,15 +1,17 @@
 const express = require('express'),
 	users = express.Router(),
 	Users = require('../../db/schemas/users'),
-	bcrypt = require('bcryptjs');
+	bcrypt = require('bcryptjs'),
+	mongoose = require('mongoose');
 
 // TODO : Gérer les codes d'erreurs HTML - Gérer la longueur du mot de passe
 users.post('/sign', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
 		if (!doc) {
 			let hash = bcrypt.hashSync(req.body.password, 10);
-			let token = bcrypt.hashSync(req.body.username + hash, 10);
 			let user = new Users();
+			let token = new mongoose.mongo.ObjectId();
+			user._id = token;
 			user.username = req.body.username;
 			user.lastname = req.body.lastname;
 			user.firstname = req.body.firstname;
@@ -18,7 +20,7 @@ users.post('/sign', (req, res) => {
 
 			user.save((err) => {
 				if (err) {
-					res.status(404).send('BAD REQUEST');
+					res.status(404).send(err);
 				}
 				res.send({message: 'Utilisateur créer et inséré dans la base Mongo !'});
 			});

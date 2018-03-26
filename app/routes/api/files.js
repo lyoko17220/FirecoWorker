@@ -2,11 +2,10 @@ const express = require('express'),
 	files = express.Router(),
 	fileupload = require('express-fileupload'),
 	token = require('randomstring'),
+	fs = require('fs'),
 	Upload = require('../../db/schemas/upload'),
 	Download = require('../../db/schemas/download'),
 	Users = require('../../db/schemas/users');
-
-express.use(fileupload());
 
 files.get('/upload/request/:user_token', (req, res) =>{
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
@@ -34,14 +33,16 @@ files.get('/download/request/:user_token', (req, res) =>{
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let download = new Download();
+			let date = new Date().getTime();
 
+			download.user_token = doc._id;
 			download.token = token.generate(32);
-			download.period_start = new Date().getTime();
-			download.period_end = download.period_start + 604800000;
+			download.period_start = date;
+			download.period_end = date + 604800000;
 
 			download.save((err) => {
 				if (err) {
-					res.status(404).send('BAD REQUEST');
+					res.status(404).send(err);
 				}
 				res.json({message: 'Token de téléchargement ajouté à la base de données'});
 			});
@@ -54,11 +55,13 @@ files.get('/download/request/:user_token', (req, res) =>{
 files.get('/download/:user_token/:download_token', (req, res) =>{
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
-			Download.findOne({'token': req.params.download_token, 'period_end': {$lt : new Date().getTime()}}).then((doc2) =>{
+			Download.findOne({'token': req.params.download_token, 'period_end': {$gt : new Date()}}).then((doc2) =>{
 				if (doc2) {
-					res.download(Download.folder + '/' + Download.filename);
+					const folder = doc2.folder,
+						filename = doc2.filename;
+					res.download(folder + '/' + filename, filename);
 				}else{
-					res.send('Enable to download this file');
+					res.send('Impossible de télécharger le fichier.');
 				}
 			});
 		}else{
