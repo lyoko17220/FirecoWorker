@@ -22,7 +22,10 @@ users.post('/sign', (req, res) => {
 				if (err) {
 					res.status(404).send(err);
 				}
-				res.json({message: 'Utilisateur créer et inséré dans la base Mongo !'});
+				res.json({
+					message: 'Utilisateur créer et inséré dans la base Mongo !',
+					token: token
+				});
 			});
 		} else {
 			res.status(404).send('Utilisateur déjà existant.');
