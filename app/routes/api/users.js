@@ -20,7 +20,7 @@ users.post('/sign', (req, res) => {
 
 			user.save((err) => {
 				if (err) {
-					res.status(404).send(err);
+					res.status(400).send(err);
 				}
 				res.json({
 					message: 'Utilisateur créer et inséré dans la base Mongo !',
@@ -28,7 +28,7 @@ users.post('/sign', (req, res) => {
 				});
 			});
 		} else {
-			res.status(404).send('Utilisateur déjà existant.');
+			res.status(400).send('Utilisateur déjà existant.');
 		}
 	});
 
@@ -41,10 +41,10 @@ users.post('/login', (req, res) => {
 			if(bcrypt.compareSync(req.body.password, doc.password)){
 				res.json(doc);
 			}else{
-				res.status(404).send('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
+				res.status(400).send('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
 			}
 		}else{
-			res.status(404).send('Utilisateur non trouvé');
+			res.status(400).send('Utilisateur non trouvé');
 		}
 	});
 
