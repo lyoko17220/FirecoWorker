@@ -15,13 +15,13 @@ Ajout d'un utilisateur à la base de données.
 #### Paramètres
 
 - `username` - *Pseudo de l'utilisateur*
-  **Requis** : [1 - 20 chaine de caractères]
+  **Requis** : [chaine de caractères]
  * `lastname`- *Nom de l'utilisateur*
-   **Requis** : [1 - 32 lettres, -]
+   **Requis** : [lettres, -]
  * `firstname` - *Prénom de l'utilisateur*
-   **Requis** : [1 - 32 lettres, -]
+   **Requis** : [lettres, -]
  * `password` - *Mot de passe de l'utilisateur*
-   **Requis** : [6 - 15 string]
+   **Requis** : [string]
 
 #### Succès
 
@@ -308,9 +308,6 @@ Demande d'adresse pour téléversement d'un fichier. Authentification obligatoir
 - `user_token` - *Jeton associé à un utilisateur de la base de données*
   **Requis :** Utilisateur connecté
 
-* `disk` - *Volume contenant les fichiers du serveur*
-   **Requis :** Volume existant et connecté au serveur
-
 * `folder` - *Chemin d'accès du fichier à téléverser*
    **Requis :** Chemin existant
 
@@ -419,9 +416,6 @@ Demande d'adresse pour téléchargement d'un fichier. Authentification et droits
 - `user_token` - *Jeton assocé à l'utilisateur*
   **Requis :** Utilisateur connecté
 
-
-- `disk` - *Volume contenant les fichiers du serveur*
-  **Requis :** Volume existant et connecté au serveur
 
 - `folder` - *Chemin d'accès du fichier à télécharger*
    **Requis :** Chemin d'accès existant et correct
