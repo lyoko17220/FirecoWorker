@@ -293,6 +293,71 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 
 
+### Lister le contenu d'un dossier
+
+Liste les fichiers d'un dossier.
+
+​	**URL :** `/api/folders/content`
+
+​	**Methode :** `POST`
+
+#### Paramètres
+
+- `user_token` - *Jeton assocé à l'utilisateur*
+  **Requis :** Utilisateur connecté
+
+
+- `folder` - *Chemin d'accès du répertoire, facultatif*
+  **Requis :** Chemin d'accès existant et correct
+
+#### Succès
+
+​	**Conditions :** Toutes les conditions sont correctes et remplies.
+
+​	**Code :** `200 OK`
+
+​	**Exemple de réponse :** `type` : `folder` si dossier, `file` si fichier, `path` : chemin d'accès
+
+```json
+{
+    "content": [
+        "name": name,
+        "type": type,
+        "path": path
+    ]
+}
+```
+
+
+
+#### Erreurs
+
+​	**Condition :** Le dossier n'existe pas, chemin d'accès incorrect.
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Le dossier n'existe pas ou le chemin d'accès est incorrect."
+}
+```
+
+​	**Condition :** Utilisateur non connecté.
+
+​	**Code :** `401 UNAUTHORIZED`
+
+​		**Exemple de réponse :**
+
+```json
+{
+    "message" : "Une authentification est requise pour effectuer cette action."
+}
+```
+
+
+
 ## Gestion des fichiers `/api/files`
 
 ### Demande de téléversement
@@ -375,6 +440,14 @@ Téléversement d'un fichier sur le serveur via la demande de téléversement `/
 
 ​	**Code :** `200 OK`
 
+```json
+{
+    "message" : "Le fichier a bien été téléversé"
+}
+```
+
+
+
 #### Erreurs
 
 ​	**Condition :** Jeton invalide.
@@ -385,7 +458,7 @@ Téléversement d'un fichier sur le serveur via la demande de téléversement `/
 
 ```json
 {
-    "message" : "Jeton de téléversement invalide"
+    "message" : "Impossible de téléverser le fichier"
 }
 ```
 
