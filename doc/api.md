@@ -367,7 +367,7 @@ Téléversement d'un fichier sur le serveur via la demande de téléversement `/
 
 #### Paramètres
 
-Aucun paramètres requis.
+* `destination_folder` - *répertoire de destination du fichier à téléverser*
 
 #### Succès
 
