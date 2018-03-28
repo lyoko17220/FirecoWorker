@@ -5,7 +5,7 @@ const express = require('express'),
 	mongoose = require('mongoose');
 
 // TODO : Gérer les codes d'erreurs HTML - Gérer la longueur du mot de passe
-users.post('/sign', (req, res) => {
+	users.post('/sign', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
 		if (!doc) {
 			let hash = bcrypt.hashSync(req.body.password, 10);
