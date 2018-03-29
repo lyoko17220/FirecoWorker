@@ -14,7 +14,7 @@ devices.get('/:user_token', (req, res) => {
 				res.json(drives);
 			});
 		}else{
-			res.status(401).send({message: 'Vous devez être connecté pour accéder à cette ressouce.'});
+			res.status(401).json({message: 'Vous devez être connecté pour accéder à cette ressouce.'});
 		}
 	});
 });
