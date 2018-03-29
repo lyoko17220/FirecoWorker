@@ -5,7 +5,7 @@ const express = require('express'),
 	mongoose = require('mongoose');
 
 // TODO : Gérer les codes d'erreurs HTML - Gérer la longueur du mot de passe
-	users.post('/sign', (req, res) => {
+users.post('/sign', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
 		if (!doc) {
 			let hash = bcrypt.hashSync(req.body.password, 10);
@@ -36,13 +36,15 @@ const express = require('express'),
 // TODO : Gérer les codes d'erreurs HTML
 users.post('/login', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
-		if(doc){
-			if(bcrypt.compareSync(req.body.password, doc.password)){
-				res.json(doc.token);
-			}else{
+		if (doc) {
+			if (bcrypt.compareSync(req.body.password, doc.password)) {
+				res.json({
+					token: doc.token
+				});
+			} else {
 				res.status(400).send('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
 			}
-		}else{
+		} else {
 			res.status(400).send('Utilisateur non trouvé');
 		}
 	});
