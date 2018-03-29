@@ -109,11 +109,11 @@ files.post('/delete/:user_token', (req, res) =>{
 	});
 });
 
-files.put('/rename', (req, res) =>{
+files.post('/rename', (req, res) =>{
 	res.json('API destinee a renommer un fichier');
 });
 
-files.get('/', (req, res) =>{
+files.all('/', (req, res) =>{
 	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 

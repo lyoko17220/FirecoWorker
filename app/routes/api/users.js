@@ -22,9 +22,7 @@ users.post('/sign', (req, res) => {
 				if (err) {
 					res.status(400).json(err);
 				}
-				res.json({
-					token: token
-				});
+				res.status(200).json({token: token});
 			});
 		} else {
 			res.status(400).json({message: 'Utilisateur déjà existant.'});
@@ -38,7 +36,7 @@ users.post('/login', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
 		if (doc) {
 			if (bcrypt.compareSync(req.body.password, doc.password)) {
-				res.json({
+				res.status(200).json({
 					token: doc.token
 				});
 			} else {
@@ -53,7 +51,7 @@ users.post('/login', (req, res) => {
 users.get('/infos/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
-			res.json({
+			res.status(200).json({
 				firstname: doc.firstname,
 				lastname: doc.lastname,
 				username: doc.username
@@ -64,7 +62,7 @@ users.get('/infos/:user_token', (req, res) => {
 	});
 });
 
-users.get('/', (req, res) => {
+users.all('/', (req, res) => {
 	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 

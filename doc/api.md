@@ -61,11 +61,12 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 #### Paramètres
 
- -`username` - *Nom d'utilisateur*
-   **Requis :** champ non vide
+- `username` - *Nom d'utilisateur*
+  **Requis :** champ non vide
 
- -`password` - *Mot de passe de l'utilisateur*
-   **Requis :** champ non vide
+
+- `password` - *Mot de passe de l'utilisateur*
+  **Requis :** champ non vide
 
 #### Succès
 
@@ -87,7 +88,7 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 ​	**Code :** `400 BAD REQUEST`
 
-​	**Exemple de réponse :** Connexion impossible.
+​	**Exemple de réponse :** Erreur de combinaison
 
 ```json
 {
@@ -107,8 +108,8 @@ Acquisition des informations propre à un utilisateur spécifique.
 
 #### Paramètres
 
- -`user_token` - *Jeton d'utilisateur*
-   **Requis :** présence du jeton dans la barre d'adresse
+- `user_token` - *Jeton d'utilisateur*
+  **Requis :** Présence du jeton dans la barre d'adresse
 
 #### Succès
 
@@ -148,30 +149,33 @@ Acquisition des informations propre à un utilisateur spécifique.
 
 Création directe du dossier sur la mémoire du serveur. Authentification requise, droits selon le chemin d'accès requis.
 
-​	**URL :** `/api/folders/create`
+​	**URL :** `/api/folders/create/:user_token`
 
 ​	**Methode :** `POST`
 
 #### Paramètres
 
 - `user_token` - *Jeton assocé à l'utilisateur*
-  **Requis :** Utilisateur connecté
+  **Requis :** Présence du jeton dans la barre d'adresse
 
 
-- `disk` - *Volume contenant les fichiers du serveur*
-  **Requis :** Volume existant et connecté au serveur
-
-
-- `folder` - *Chemin d'accès du répertoire, facultatif*
-  **Requis :** Chemin d'accès existant et correct
+- `path` - *Chemin d'accès du répertoire, facultatif*
+  **Requis :** Chemin d'accès existant
 - `folder_name` - *Nom du dossier à créer*
-  **Requis :** [1 - 15 string]
 
 #### Succès
 
 ​	**Conditions :** Toutes les conditions sont correctes et remplies.
 
 ​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "message" : "Dossier créer."
+}
+```
 
 #### Erreurs
 
@@ -183,7 +187,7 @@ Création directe du dossier sur la mémoire du serveur. Authentification requis
 
 ```json
 {
-    "message" : "Le chemin d'accès est incorrect."
+    "message" : "Le chemin d'accès est incorrect ou le dossier existe déjà."
 }
 ```
 
@@ -191,7 +195,7 @@ Création directe du dossier sur la mémoire du serveur. Authentification requis
 
 ​	**Code :** `401 UNAUTHORIZED`
 
-​		**Exemple de réponse :**
+​	**Exemple de réponse :**
 
 ```json
 {
@@ -205,28 +209,34 @@ Création directe du dossier sur la mémoire du serveur. Authentification requis
 
 Suppression directe du dossier et de son contenu sur la mémoire du serveur. Authentification requise, droits selon le chemin d'accès requis.
 
-​	**URL :** `/api/folders/delete`
+​	**URL :** `/api/folders/delete/:user_token`
 
-​	**Methode :** `DELETE`
+​	**Methode :** `POST`
 
 #### Paramètres
 
 - `user_token` - *Jeton assocé à l'utilisateur*
-  **Requis :** Utilisateur connecté
+  **Requis :** Présence du jeton dans la barre d'adresse
 
 
-- `disk` - *Volume contenant les fichiers du serveur*
-  **Requis :** Volume existant et connecté au serveur
-
-
-- `folder` - *Chemin d'accès du répertoire, facultatif*
+- `path` - *Chemin d'accès du répertoire, facultatif*
   **Requis :** Chemin d'accès existant et correct
+- `folder_name` - *Nom du fichier à supprimer*
+  **Requis :** Nom de dossier existant et correct
 
 #### Succès
 
 ​	**Conditions :** Toutes les conditions sont correctes et remplies.
 
 ​	**Code :** `200 OK`
+
+​	**Exemple de réponse :**
+
+```json
+{
+    "message" : "Dossier supprimé"
+}
+```
 
 #### Erreurs
 
@@ -246,7 +256,7 @@ Suppression directe du dossier et de son contenu sur la mémoire du serveur. Aut
 
 ​	**Code :** `401 UNAUTHORIZED`
 
-​		**Exemple de réponse :**
+​	**Exemple de réponse :**
 
 ```json
 {
@@ -260,26 +270,21 @@ Suppression directe du dossier et de son contenu sur la mémoire du serveur. Aut
 
 Renommer directement un fichier présent sur le serveur. Authentification et droits sur le fichier obligatoires.
 
-​	**URL :** `/api/folders/rename`
+​	**URL :** `/api/folders/rename/:user_token`
 
-​	**Methode :** `PUT`
+​	**Methode :** `POST`
 
 #### Paramètres
 
 - `user_token` - *Jeton assocé à l'utilisateur*
-  **Requis :** Utilisateur connecté
+  **Requis :** Présence du jeton dans la barre d'adresse
 
 
-- `disk` - *Volume contenant les fichiers du serveur*
-  **Requis :** Volume existant et connecté au serveur
-
-
-- `folder` - *Chemin d'accès du répertoire, facultatif*
+- `path` - *Chemin d'accès du répertoire, facultatif*
   **Requis :** Chemin d'accès existant et correct
-- `old_folder_name` - *Ancien nom du dossier à renommer*
+- `folder_name` - *Nom du dossier à renommer*
   **Requis :** Dossier existant et nom correct
-- `new_folder_name` - *Nouveau nom du dossier à renommer*
-  **Requis :** [1 - 32 string], nom correct
+- `new_folder_name` - *Nouveau nom du dossier*
 
 #### Succès
 
@@ -291,11 +296,9 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 ```json
 {
-    "message" : "Le dossier a été renommé"
+    "message" : "Dossier renommé"
 }
 ```
-
-
 
 #### Erreurs
 
@@ -315,7 +318,7 @@ Renommer directement un fichier présent sur le serveur. Authentification et dro
 
 ​	**Code :** `401 UNAUTHORIZED`
 
-​		**Exemple de réponse :**
+​	**Exemple de réponse :**
 
 ```json
 {
@@ -360,8 +363,6 @@ Liste les fichiers d'un dossier.
 }
 ```
 
-
-
 #### Erreurs
 
 ​	**Condition :** Le dossier n'existe pas, chemin d'accès incorrect.
@@ -380,7 +381,7 @@ Liste les fichiers d'un dossier.
 
 ​	**Code :** `401 UNAUTHORIZED`
 
-​		**Exemple de réponse :**
+​	**Exemple de réponse :**
 
 ```json
 {

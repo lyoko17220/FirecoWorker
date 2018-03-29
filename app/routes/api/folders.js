@@ -2,16 +2,17 @@ const express = require('express'),
 	folders = express.Router(),
 	fs = require('fs'),
 	path = require('path'),
-	Users = require('../../db/schemas/users');
+	Users = require('../../db/schemas/users'),
+	rimraf = require('rimraf');
 
 folders.post('/create/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folder_name;
-			fs.mkdir(folder_path, 0o777, (err) =>{
-				if(err)
-					res.status(400).json({err});
-				res.json({message: 'Dossier créé.'});
+			fs.mkdir(folder_path, 0o777, (err) => {
+				if (err)
+					res.status(400).json({message: 'Le chemin d\'accès est incorrect ou le dossier existe déjà.'});
+				res.status(200).json({message: 'Dossier créé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
@@ -19,23 +20,35 @@ folders.post('/create/:user_token', (req, res) => {
 	});
 });
 
-folders.delete('/delete', (req, res) => {
-	res.json('API destinee a la suppression de dossiers');
+folders.post('/delete/:user_token', (req, res) => {
+	Users.findOne({'token': req.params.user_token}).then((doc) => {
+		if (doc) {
+			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folder_name;
+			rimraf(folder_path, (err) => {
+				if (err)
+					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
+				res.status(200).json({message: 'Dossier supprimé.'});
+			});
+		} else {
+			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
+		}
+	});
 });
 
 folders.post('/rename/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let folder_path = '/firecodata' + req.body.path;
-			fs.rename(folder_path + '/' + req.body.folder_name, folder_path + '/' + req.body.new_folder_name, (err) =>{
-				if(err)
+			fs.rename(folder_path + '/' + req.body.folder_name, folder_path + '/' + req.body.new_folder_name, (err) => {
+				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
-				res.json({message: 'Dossier renomé.'});
+				res.status(200).json({message: 'Dossier renommé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
 		}
-	});});
+	});
+});
 
 folders.post('/content/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
@@ -58,7 +71,7 @@ folders.post('/content/:user_token', (req, res) => {
 							'path': folderpath
 						});
 					});
-					res.json(output);
+					res.status(200).json(output);
 				}
 			});
 		} else {
@@ -67,7 +80,7 @@ folders.post('/content/:user_token', (req, res) => {
 	});
 });
 
-folders.get('/', (req, res) => {
+folders.all('/', (req, res) => {
 	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
