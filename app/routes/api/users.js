@@ -20,14 +20,14 @@ users.post('/sign', (req, res) => {
 
 			user.save((err) => {
 				if (err) {
-					res.status(400).send(err);
+					res.status(400).json(err);
 				}
 				res.json({
 					token: token
 				});
 			});
 		} else {
-			res.status(400).send('Utilisateur déjà existant.');
+			res.status(400).json('Utilisateur déjà existant.');
 		}
 	});
 
@@ -42,17 +42,30 @@ users.post('/login', (req, res) => {
 					token: doc.token
 				});
 			} else {
-				res.status(400).send('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
+				res.status(400).json('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
 			}
 		} else {
-			res.status(400).send('Utilisateur non trouvé');
+			res.status(400).json('Utilisateur non trouvé');
 		}
 	});
+});
 
+users.get('/infos/:user_token', (req, res) => {
+	Users.findOne({'token': req.params.user_token}).then((doc) => {
+		if (doc) {
+			res.json({
+				firstname: doc.firstname,
+				lastname: doc.lastname,
+				username: doc.username
+			});
+		} else {
+			res.status(400).json('Utilisateur non trouvé');
+		}
+	});
 });
 
 users.get('/', (req, res) => {
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json('Oh non, c\'est un cul de sac');
 });
 
 module.exports = users;
