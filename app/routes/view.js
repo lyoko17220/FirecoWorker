@@ -28,7 +28,7 @@ view.get('/home', function (req, res){
 });
 
 view.get('/subscription', function (req, res){
-	res.render('/page/subscription.html');
+	res.render('subscription.html');
 
 });
 
