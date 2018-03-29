@@ -32,6 +32,8 @@ $(document).ready(function () {
 			dataType: 'json',
 			success: function (data) {
 				console.log(data);
+				document.cookie = 'token=' + data.token;
+				console.log(document.cookie);
 			},
 			error: function (data) {
 				$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-danger fade show" >
