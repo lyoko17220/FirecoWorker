@@ -6,23 +6,23 @@ const express = require('express'),
 	devices = require('./api/devices');
 
 api.all('/users', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 api.all('/folders', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 api.all('/files', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 api.all('/devices', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 api.all('/', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 api.use('/users', users);

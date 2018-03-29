@@ -9,18 +9,18 @@ devices.get('/:user_token', (req, res) => {
 		if (doc) {
 			drivelist.list((err, drives) => {
 				if (err)
-					res.status(404).send('Ressource introuvable.');
+					res.status(404).json({message: 'Ressource introuvable.'});
 
 				res.json(drives);
 			});
 		}else{
-			res.status(401).send('Vous devez être connecté pour accéder à cette ressouce.');
+			res.status(401).send({message: 'Vous devez être connecté pour accéder à cette ressouce.'});
 		}
 	});
 });
 
 devices.all('/', (req, res) =>{
-	res.status(418).send('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 module.exports = devices;

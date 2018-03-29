@@ -47,7 +47,7 @@ folders.post('/content/:user_token', (req, res) => {
 });
 
 folders.get('/', (req, res) => {
-	res.send('Erreur 418', 418);
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 module.exports = folders;

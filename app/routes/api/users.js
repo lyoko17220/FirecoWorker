@@ -27,7 +27,7 @@ users.post('/sign', (req, res) => {
 				});
 			});
 		} else {
-			res.status(400).json('Utilisateur déjà existant.');
+			res.status(400).json({message: 'Utilisateur déjà existant.'});
 		}
 	});
 
@@ -42,10 +42,10 @@ users.post('/login', (req, res) => {
 					token: doc.token
 				});
 			} else {
-				res.status(400).json('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
+				res.status(400).json({message: 'Le nom d\'utilisateur ou le mot de passe ne correspond pas.'});
 			}
 		} else {
-			res.status(400).json('Utilisateur non trouvé');
+			res.status(400).json({message: 'Le nom d\'utilisateur ou le mot de passe ne correspond pas.'});
 		}
 	});
 });
@@ -59,13 +59,13 @@ users.get('/infos/:user_token', (req, res) => {
 				username: doc.username
 			});
 		} else {
-			res.status(400).json('Utilisateur non trouvé');
+			res.status(400).json({message: 'Utilisateur non trouvé.'});
 		}
 	});
 });
 
 users.get('/', (req, res) => {
-	res.status(418).json('Oh non, c\'est un cul de sac');
+	res.status(418).json({message: 'Oh non, c\'est un cul de sac ! :('});
 });
 
 module.exports = users;
