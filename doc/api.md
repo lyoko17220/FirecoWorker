@@ -6,7 +6,7 @@
 
 ### Inscription
 
-Ajout d'un utilisateur à la base de données.
+Ajout d'un utilisateur à la base de données, génération d'un jeton unique à l'utilisateur (correspondant à son _id pour l'instant).
 
 ​	**URL :**  `/api/users/sign`
 
@@ -29,15 +29,11 @@ Ajout d'un utilisateur à la base de données.
 
 ​	**Code :** `200 OK`
 
-​	**Exemple de réponse :** `id` - identifiant unique à l'utilisateur, `token` - identifiant de session.
+​	**Exemple de réponse :**
 
 ```json
 {
-    "id" : 1234,
-    "token" : "fc3e58ojq85e",
-    "username" : "jdupont",
-    "lastname" : "Dupont",
-    "firstname" : "Jean"
+    "token": "8vfd52afe35"
 }
 ```
 
@@ -51,14 +47,9 @@ Ajout d'un utilisateur à la base de données.
 
 ```json
 {
-    "username" : "Utilisateur déjà existant",
-    "lastname" : "Veuillez saisir au minimum 1 et au maximum 32 caractères. Les accents et tirés '-' sont autorisés.",
-    "firstname" : "Veuillez saisir au minimum 1 et au maximum 32 caractères. Les accents et tirés '-' sont autorisés.",
-    "password" : ""
+    "message": "Utilisateur déjà existant"
 }
 ```
-
-​	**Note :** Renvoie un champ vide si saisie correcte.
 
 ### Connexion
 
@@ -82,15 +73,11 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 ​	**Code :** `200 OK`
 
-​	**Exemple de réponse :** Connexion validée, renvoie du token d'accès.
+​	**Exemple de réponse :** Connexion validée, renvoie du jeton correspondant à l'utilisateur.
 
 ```json
 {
-    "id" : 1234,
-    "token" : "fc3e58ojq85e",
-    "username" : "jdupont",
-    "lastname" : "Dupont",
-    "firstname" : "Jean"
+    "token": "8vfd52afe35"
 }
 ```
 
@@ -104,7 +91,52 @@ Authentification d'un utilisateur existant dans la base de données. Il faut que
 
 ```json
 {
-    "message" : "Nom d'utilisateur ou mot de passe incorrect."
+    "message" : "Le nom d'utilisateur ou le mot de passe ne correspond pas."
+}
+```
+
+
+
+### Informations
+
+Acquisition des informations propre à un utilisateur spécifique.
+
+​	**URL :** `/api/user/infos/:user_token`
+
+​	**Methode :** `GET`
+
+#### Paramètres
+
+ -`user_token` - *Jeton d'utilisateur*
+   **Requis :** présence du jeton dans la barre d'adresse
+
+#### Succès
+
+​	**Condition :** Jeton d'utilisateur existant et présent dans la base de données
+
+​	**Code :** `200 OK`
+
+​	**Exemple de réponse :** Renvoie des informations d'utilisateur
+
+```json
+{
+    "firstname" : "Jean",
+    "lastname" : "Dupont",
+    "username" : "jdupont"
+}
+```
+
+#### Erreurs
+
+​	**Condition :** Jeton d'utilisateur incorrect ou introuvable
+
+​	**Code :** `400 BAD REQUEST`
+
+​	**Exemple de réponse :** 
+
+```json
+{
+    "message" : "Utilisateur non trouvé."
 }
 ```
 
