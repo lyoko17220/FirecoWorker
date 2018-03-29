@@ -23,7 +23,6 @@ users.post('/sign', (req, res) => {
 					res.status(400).send(err);
 				}
 				res.json({
-					message: 'Utilisateur créer et inséré dans la base Mongo !',
 					token: token
 				});
 			});
@@ -39,7 +38,7 @@ users.post('/login', (req, res) => {
 	Users.findOne({'username': req.body.username}).then((doc) => {
 		if(doc){
 			if(bcrypt.compareSync(req.body.password, doc.password)){
-				res.json(doc);
+				res.json(doc.token);
 			}else{
 				res.status(400).send('Le nom d\'utilisateur ou le mot de passe ne correspond pas.');
 			}
