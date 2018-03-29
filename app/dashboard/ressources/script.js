@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+	// Token value console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'));
+
 	/**
      * Inscription
 	 */
@@ -33,7 +35,7 @@ $(document).ready(function () {
 			success: function (data) {
 				console.log(data);
 				document.cookie = 'token=' + data.token;
-				console.log(document.cookie);
+				document.location('dashboard');
 			},
 			error: function (data) {
 				$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-danger fade show" >

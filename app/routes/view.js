@@ -13,8 +13,8 @@ view.get('/navbar', function(req, res){
 	res.render('layout.html');
 });
 
-view.get('/table', function(req, res){
-	res.render('table.html');
+view.get('/dashboard', function(req, res){
+	res.render('dashboard.html');
 });
 
 view.get('/login', function (req, res){
