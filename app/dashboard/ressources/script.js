@@ -45,4 +45,80 @@ $(document).ready(function () {
 		});
 	});
 
+	let location = '/';
+
+	if ($('#filetable').length === 1){
+		addFile('Le nom magique','lien où ça pointe');
+		createFolder('FOLDER MAGIQUE', 'ok');
+	}
+
+	/**
+	 * Création d'une structure de dossier
+	 *
+	 * @param name
+	 * @param location
+	 */
+	function createFolder(name, location) {
+		const output = `<tr data-location=`+ location +`>
+                <td class="col-4">
+                    <i class="material-icons btn">folder</i>`+ name +`
+                </td>
+
+                <td class=" col-1">
+                    <nav class="navbar navbar-expand-lg navbar-expand-xl navbar-expand-md">
+                        <button class="navbar-toggler material-icons btn-info btn-lg m-2 p-1"
+                                data-toggle="collapse"
+                                data-target="#groupBtnBis" aria-controls="groupBtnBis" aria-expanded="false"
+                                aria-label="Toggle navigation">list
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="groupBtnBis">
+                            <button class="material-icons btn-info btn-lg m-2 p-1">info</button>
+                            <button class="material-icons btn-primary btn-lg m-2 p-1">mode_edit</button>
+                            <button class="material-icons btn-danger btn-lg m-2 p-1">delete</button>
+                        </div>
+                    </nav>
+
+                </td>
+            </tr>`;
+
+		$('tbody').append(output);
+	}
+
+	/**
+	 * Création d'une structure de fichier
+	 *
+	 * @param name
+	 * @param location
+	 */
+	function addFile(name, location) {
+
+		let output = '<tr data-location='+ location +`>
+                <td class="col-4">
+                    <i class="material-icons btn ">insert_drive_file</i>`+ name +`
+                </td>
+
+                <td class=" col-1">
+                    <nav class="navbar navbar-expand-lg navbar-expand-xl navbar-expand-md">
+                        <button class="navbar-toggler material-icons btn-info btn-lg m-2 p-1"
+                                data-toggle="collapse"
+                                data-target="#groupBtn" aria-controls="groupBtn" aria-expanded="false"
+                                aria-label="Toggle navigation">list
+                        </button>
+                        <div class="collapse navbar-collapse" id="groupBtn">
+                            <button class="material-icons btn-info btn-lg m-2 p-1">info</button>
+                            <button class="material-icons btn-success btn-lg m-2 p-1">file_download</button>
+                            <button class="material-icons btn-primary btn-lg m-2 p-1">mode_edit</button>
+                            <button class="material-icons btn-danger btn-lg m-2 p-1">delete</button>
+                        </div>
+                    </nav>
+                </td>
+
+
+            </tr>`;
+
+		$('tbody').append(output);
+
+	}
+
 });
