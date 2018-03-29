@@ -4,17 +4,38 @@ const express = require('express'),
 	path = require('path'),
 	Users = require('../../db/schemas/users');
 
-folders.post('/create', (req, res) => {
-	res.json('API destinee a la creation de dossiers');
+folders.post('/create/:user_token', (req, res) => {
+	Users.findOne({'token': req.params.user_token}).then((doc) => {
+		if (doc) {
+			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folder_name;
+			fs.mkdir(folder_path, 0o777, (err) =>{
+				if(err)
+					res.status(400).json({err});
+				res.json({message: 'Dossier créé.'});
+			});
+		} else {
+			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
+		}
+	});
 });
 
 folders.delete('/delete', (req, res) => {
 	res.json('API destinee a la suppression de dossiers');
 });
 
-folders.put('/rename', (req, res) => {
-	res.json('API destinee pour renommer les dossiers');
-});
+folders.post('/rename/:user_token', (req, res) => {
+	Users.findOne({'token': req.params.user_token}).then((doc) => {
+		if (doc) {
+			let folder_path = '/firecodata' + req.body.path;
+			fs.rename(folder_path + '/' + req.body.folder_name, folder_path + '/' + req.body.new_folder_name, (err) =>{
+				if(err)
+					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
+				res.json({message: 'Dossier renomé.'});
+			});
+		} else {
+			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
+		}
+	});});
 
 folders.post('/content/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
