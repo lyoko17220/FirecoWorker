@@ -3,8 +3,8 @@ $(document).ready(function () {
 	// Token value console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'));
 
 	/**
-     * Inscription
-	 */
+         * Inscription
+         */
 	$('#sign').click(function (e) {
 		e.preventDefault();
 		$.ajax({
@@ -20,14 +20,14 @@ $(document).ready(function () {
 	});
 
 	/**
-     * Connexion
-	 */
+         * Connexion
+         */
 	$('#login').click(function (e) {
 		e.preventDefault();
 		$.ajax({
 			url: '/api/users/login',
 			type: 'POST',
-			data:{
+			data: {
 				username: $('#username').val(),
 				password: $('#password').val(),
 			},
@@ -35,7 +35,7 @@ $(document).ready(function () {
 			success: function (data) {
 				console.log(data);
 				document.cookie = 'token=' + data.token;
-				document.location('dashboard');
+				document.location.href = ('dashboard');
 			},
 			error: function (data) {
 				$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-danger fade show" >
@@ -44,24 +44,49 @@ $(document).ready(function () {
 			}
 		});
 	});
+	function dashbord() {
+
+		$.ajax({
+			url: '/api/folders/content/' + document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'),
+			type: 'POST',
+			data: {
+				folder: '',
+			},
+			dataType: 'json',
+			success: function (data) {
+				console.log(data);
+				for (let j in data.content) {
+					if (data.content[j].type === 'folder') {
+						displayFolder(data.content[j].name,data.content[j].path);
+					}
+					else {
+						displayFile(data.content[j].name,data.content[j].path);
+					}
+				}
+			}
+		});
+	}
+
 
 	let location = '/';
 
-	if ($('#filetable').length === 1){
-		addFile('Le nom magique','lien où ça pointe');
-		createFolder('FOLDER MAGIQUE', 'ok');
+	if ($('#filetable').length === 1) {
+		displayFile('Le nom magique', 'lien où ça pointe');
+		displayFolder('FOLDER MAGIQUE', 'ok');
+		dashbord();
 	}
 
+
 	/**
-	 * Création d'une structure de dossier
-	 *
-	 * @param name
-	 * @param location
-	 */
-	function createFolder(name, location) {
-		const output = `<tr data-location=`+ location +`>
+         * Création d'une structure de dossier
+         *
+         * @param name
+         * @param location
+         */
+	function displayFolder(name, location) {
+		const output = '<tr data-location=' + location + `>
                 <td class="col-4">
-                    <i class="material-icons btn">folder</i>`+ name +`
+                    <i class="material-icons btn">folder</i>` + name + `
                 </td>
 
                 <td class=" col-1">
@@ -78,7 +103,6 @@ $(document).ready(function () {
                             <button class="material-icons btn-danger btn-lg m-2 p-1">delete</button>
                         </div>
                     </nav>
-
                 </td>
             </tr>`;
 
@@ -86,16 +110,16 @@ $(document).ready(function () {
 	}
 
 	/**
-	 * Création d'une structure de fichier
-	 *
-	 * @param name
-	 * @param location
-	 */
-	function addFile(name, location) {
+         * Création d'une structure de fichier
+         *
+         * @param name
+         * @param location
+         */
+	function displayFile(name, location) {
 
-		let output = '<tr data-location='+ location +`>
+		let output = '<tr data-location=' + location + `>
                 <td class="col-4">
-                    <i class="material-icons btn ">insert_drive_file</i>`+ name +`
+                    <i class="material-icons btn ">insert_drive_file</i>` + name + `
                 </td>
 
                 <td class=" col-1">
@@ -121,4 +145,5 @@ $(document).ready(function () {
 
 	}
 
-});
+}
+);

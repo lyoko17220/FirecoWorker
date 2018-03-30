@@ -1,6 +1,11 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    Dashboard
+{% endblock %}
+
 {% block content %}
+
 
 <div class="col-lg-8">
     <br> <br> <br>
@@ -24,7 +29,7 @@
 
             <tbody class="text-left">
             <tr>
-                <td class="col-4">
+         <!--       <td class="col-4">
                     <i class="material-icons btn ">insert_drive_file</i>Nom de fichier
                 </td>
 
@@ -66,13 +71,13 @@
                         </div>
                     </nav>
 
-                </td>
+                </td> !-->
             </tr>
             </tbody>
             <tfoot>
             <td class="text-right" colspan="2">
                 <div class="text-right">
-                    <button class="material-icons btn-success text-right m-2 ">file_upload</button>
+                    <button class="material-icons btn-success text-right m-2 " id="test">file_upload</button>
                     <button class="material-icons btn-success text-right m-2 ">create_new_folder</button>
                 </div>
             </td>
