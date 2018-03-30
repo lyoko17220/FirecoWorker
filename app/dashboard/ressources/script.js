@@ -19,6 +19,13 @@ $(document).ready(function () {
 		});
 	});
 
+	$('#logout').click(function (e) {
+		e.preventDefault();
+		document.cookie = 'token=';
+		document.location.href = ('home');
+	});
+
+
 	/**
          * Connexion
          */
@@ -37,13 +44,14 @@ $(document).ready(function () {
 				document.cookie = 'token=' + data.token;
 				document.location.href = ('dashboard');
 			},
-			error: function (data) {
+			error: function () {
 				$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-danger fade show" >
 					<span> Le nom d'utilisateur ou le mot de passe ne correspond pas.</span>
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>`);
 			}
 		});
 	});
+
 	function dashbord() {
 
 		$.ajax({
@@ -57,10 +65,10 @@ $(document).ready(function () {
 				console.log(data);
 				for (let j in data.content) {
 					if (data.content[j].type === 'folder') {
-						displayFolder(data.content[j].name,data.content[j].path);
+						displayFolder(data.content[j].name, data.content[j].path);
 					}
 					else {
-						displayFile(data.content[j].name,data.content[j].path);
+						displayFile(data.content[j].name, data.content[j].path);
 					}
 				}
 				linksForDashboard();
@@ -83,9 +91,13 @@ $(document).ready(function () {
 	let location = '/';
 
 	if ($('#filetable').length === 1) {
-		dashbord();
+		console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '');
+		if (document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '') {
+			dashbord();
+		}
+		else
+			document.location.href = ('https://www.theuselesswebindex.com/error/');
 	}
-
 
 	/**
          * Création d'une structure de dossier
@@ -156,4 +168,5 @@ $(document).ready(function () {
 	}
 
 }
-);
+)
+;
