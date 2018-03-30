@@ -54,7 +54,7 @@ folders.post('/content/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let output = {content: []};
-			let folderpath = '/firecodata' + req.body.folder;
+			let folderpath = req.body.folder;
 			fs.readdir(folderpath, (err, files) => {
 				if (err) {
 					res.status(400).json('Le dossier n\'existe pas ou le chemin d\'accès est incorrect.');
