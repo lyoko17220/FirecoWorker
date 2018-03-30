@@ -63,7 +63,19 @@ $(document).ready(function () {
 						displayFile(data.content[j].name,data.content[j].path);
 					}
 				}
+				linksForDashboard();
 			}
+		});
+	}
+
+	/**
+	 * Liens pour les boutons du tableau de fichier
+	 */
+	function linksForDashboard(){
+		$('.material-icons.btn-success.btn-lg.m-2.p-1').on('click', function () {
+			const path = $(this).attr('data-location');
+			const filemane = $(this).attr('data-filename');
+			console.log(path);
 		});
 	}
 
@@ -71,8 +83,6 @@ $(document).ready(function () {
 	let location = '/';
 
 	if ($('#filetable').length === 1) {
-		displayFile('Le nom magique', 'lien où ça pointe');
-		displayFolder('FOLDER MAGIQUE', 'ok');
 		dashbord();
 	}
 
@@ -86,7 +96,7 @@ $(document).ready(function () {
 	function displayFolder(name, location) {
 		const output = '<tr data-location=' + location + `>
                 <td class="col-4">
-                    <i class="material-icons btn">folder</i>` + name + `
+                    <i class="material-icons btn" data-location="` + location + '">folder</i>' + name + `
                 </td>
 
                 <td class=" col-1">
@@ -117,7 +127,7 @@ $(document).ready(function () {
          */
 	function displayFile(name, location) {
 
-		let output = '<tr data-location=' + location + `>
+		let output = `<tr>
                 <td class="col-4">
                     <i class="material-icons btn ">insert_drive_file</i>` + name + `
                 </td>
@@ -131,7 +141,7 @@ $(document).ready(function () {
                         </button>
                         <div class="collapse navbar-collapse" id="groupBtn">
                             <button class="material-icons btn-info btn-lg m-2 p-1">info</button>
-                            <button class="material-icons btn-success btn-lg m-2 p-1">file_download</button>
+                            <button class="material-icons btn-success btn-lg m-2 p-1" data-location=` + location + ' data-filename="'+ name+`">file_download</button>
                             <button class="material-icons btn-primary btn-lg m-2 p-1">mode_edit</button>
                             <button class="material-icons btn-danger btn-lg m-2 p-1">delete</button>
                         </div>
