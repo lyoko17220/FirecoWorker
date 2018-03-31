@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 $(document).ready(function () {
 
 	// Token value console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'));
@@ -52,13 +53,15 @@ $(document).ready(function () {
 		});
 	});
 
-	function dashbord() {
-
+	function dashbord(path) {
+        if(path == null){
+            path = '';
+        }
 		$.ajax({
 			url: '/api/folders/content/' + document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'),
 			type: 'POST',
 			data: {
-				folder: '',
+				folder: path,
 			},
 			dataType: 'json',
 			success: function (data) {
@@ -71,10 +74,15 @@ $(document).ready(function () {
 						displayFile(data.content[j].name, data.content[j].path);
 					}
 				}
+                navigationFolder();
 				linksForDashboard();
+
+
 			}
 		});
 	}
+
+
 
 	/**
 	 * Liens pour les boutons du tableau de fichier
@@ -82,15 +90,30 @@ $(document).ready(function () {
 	function linksForDashboard(){
 		$('.material-icons.btn-success.btn-lg.m-2.p-1').on('click', function () {
 			const path = $(this).attr('data-location');
-			const filemane = $(this).attr('data-filename');
+			const filename = $(this).attr('data-filename');
 			console.log(path);
 		});
 	}
 
+    function navigationFolder(){
+        $('.material-icons.btn').on('click', function () {
+            const path = $(this).attr('data-location');
+            const filename = $(this).attr('id');
+            const newPath = path + '/'+filename;
+            $('tbody').empty();
+            dashbord(newPath);
 
-	let location = '/';
+        });
+    }
 
-	if ($('#filetable').length === 1) {
+
+
+
+
+
+
+
+    if ($('#filetable').length === 1) {
 		console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '');
 		if (document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '') {
 			dashbord();
@@ -108,7 +131,7 @@ $(document).ready(function () {
 	function displayFolder(name, location) {
 		const output = '<tr data-location=' + location + `>
                 <td class="col-4">
-                    <i class="material-icons btn" data-location="` + location + '">folder</i>' + name + `
+                    <i class="material-icons btn"  data-location="` + location + '" id="'+ name +'" >folder</i>' + name + `
                 </td>
 
                 <td class=" col-1">
@@ -130,6 +153,8 @@ $(document).ready(function () {
 
 		$('tbody').append(output);
 	}
+
+
 
 	/**
          * Création d'une structure de fichier
@@ -167,6 +192,4 @@ $(document).ready(function () {
 
 	}
 
-}
-)
-;
+});
