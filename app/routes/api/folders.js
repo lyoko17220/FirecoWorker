@@ -8,7 +8,7 @@ const express = require('express'),
 folders.post('/create/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
-			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folder_name;
+			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folderName;
 			fs.mkdir(folder_path, 0o777, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le chemin d\'accès est incorrect ou le dossier existe déjà.'});
@@ -23,7 +23,7 @@ folders.post('/create/:user_token', (req, res) => {
 folders.post('/delete/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
-			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folder_name;
+			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folderName;
 			rimraf(folder_path, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
@@ -39,7 +39,7 @@ folders.post('/rename/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let folder_path = '/firecodata' + req.body.path;
-			fs.rename(folder_path + '/' + req.body.folder_name, folder_path + '/' + req.body.new_folder_name, (err) => {
+			fs.rename(folder_path + '/' + req.body.folderName, folder_path + '/' + req.body.newName, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
 				res.status(200).json({message: 'Dossier renommé.'});
