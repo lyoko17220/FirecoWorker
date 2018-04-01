@@ -53,7 +53,13 @@ $(document).ready(function () {
 		});
 	});
 
-	function dashbord(path) {
+	/**
+	 * Affichage du contenu d'un dossier
+	 *
+	 * @param path Chemin relatif
+	 */
+	function displayFolderContent(path) {
+		console.log(path);
         if(path == null){
             path = '';
         }
@@ -65,7 +71,7 @@ $(document).ready(function () {
 			},
 			dataType: 'json',
 			success: function (data) {
-				console.log(data);
+				//console.log(data);
 				for (let j in data.content) {
 					if (data.content[j].type === 'folder') {
 						displayFolder(data.content[j].name, data.content[j].path);
@@ -76,8 +82,6 @@ $(document).ready(function () {
 				}
                 navigationFolder();
 				linksForDashboard();
-
-
 			}
 		});
 	}
@@ -95,28 +99,43 @@ $(document).ready(function () {
 		});
 	}
 
+	let currentPath = '/';
+
     function navigationFolder(){
         $('.material-icons.btn').on('click', function () {
             const path = $(this).attr('data-location');
             const filename = $(this).attr('id');
-            const newPath = path + '/'+filename;
+            currentPath = path + '/'+filename;
             $('tbody').empty();
-            dashbord(newPath);
-
+            displayFolderContent(currentPath);
         });
     }
 
 
-
-
-
-
-
-
-    if ($('#filetable').length === 1) {
+	/**
+	 * Si on est loggé sur la page du dashboard
+	 */
+	if ($('#filetable').length === 1) {
 		console.log(document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '');
 		if (document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1') !== '') {
-			dashbord();
+			displayFolderContent();
+
+			if (window.history && window.history.pushState) {
+
+				window.history.pushState('forward', null, './#forward');
+
+				$(window).on('popstate', function() {
+					if (currentPath !== '/'){
+						let newPath = currentPath;
+						newPath = newPath.split('/');
+						newPath.pop();
+						currentPath = newPath.join('/');
+						displayFolderContent(currentPath);
+					}
+
+				});
+
+			}
 		}
 		else
 			document.location.href = ('https://www.theuselesswebindex.com/error/');
