@@ -2,7 +2,7 @@
 
 {% block firstcontent %}
 
-<div class="container col-5">
+<div class="container col-9">
 
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -10,8 +10,12 @@
                 aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-            <a class="navbar-brand" href="#">Fireco </a>
+
+            <a class="navbar-brand" href="#"> <img class="mb-4 img-fluid rounded-circle"
+                                                   src="/view/ressources/ICON_PhenixCoaching_rgb.jpg" alt="" width="30"
+                                                   height="30">Fireco </a>
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Table de gestion </a>
@@ -22,13 +26,15 @@
 
             </ul>
 
-            <button class="material-icons btn btn-outline-danger my-2 my-sm-0" id="logout" type="submit">exit_to_app</button>
+            <button class="material-icons btn btn-outline-danger my-2 my-sm-0" id="logout" type="submit">exit_to_app
+            </button>
 
         </div>
     </nav>
 </div>
+<div id="alert" role="alert" class="col-12"></div>
 
-<div class="row justify-content-md-center">
+<div class="row justify-content-center">
 
     {% block content %}
     <!-- Affichage des pages qui on besoins de la NavBar !-->

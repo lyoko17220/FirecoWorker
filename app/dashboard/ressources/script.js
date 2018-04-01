@@ -96,8 +96,37 @@ $(document).ready(function () {
 		$('.material-icons.btn-success.btn-lg.m-2.p-1').on('click', function () {
 			const path = $(this).attr('data-location');
 			const filename = $(this).attr('data-filename');
-			console.log(path);
-		});
+			});
+
+
+        $('.material-icons.btn-danger.btn-lg.m-2.p-1').on('click', function () {
+            console.log('ok');
+            const path = $(this).attr('data-location');
+            const filename = $(this).attr('data-filename');
+            $.ajax({
+                url: '/api/files/delete/' + document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1'),
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    path: path,
+                    file_name: filename,
+                },
+                success: function () {
+                    $('#alert').html(`<div id="alert" class="alert alert-dismissable alert-success fade show" >
+					<span> Le fichier `+ filename+` a bien été supprimé.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>`);
+                    $('tbody').empty();
+                    dashbord(path);
+                },
+                error: function () {
+                    $('#alert').html(`<div id="alert" class="alert alert-dismissable alert-success fade show" >
+					<span> Le fichier `+filename +` n'a pas pu etre supprimé.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>`);
+                },
+            });
+
+        });
+
 	}
 
 	let currentPath = '/';
@@ -142,6 +171,7 @@ $(document).ready(function () {
 		else
 			document.location.href = ('https://www.theuselesswebindex.com/error/');
 	}
+
 
 	/**
          * Création d'une structure de dossier
@@ -199,9 +229,9 @@ $(document).ready(function () {
                         </button>
                         <div class="collapse navbar-collapse" id="groupBtn">
                             <button class="material-icons btn-info btn-lg m-2 p-1">info</button>
-                            <button class="material-icons btn-success btn-lg m-2 p-1" data-location=` + location + ' data-filename="'+ name+`">file_download</button>
+                            <button class="material-icons btn-success btn-lg m-2 p-1" data-location="`+location+'" data-filename="'+ name+`">file_download</button>
                             <button class="material-icons btn-primary btn-lg m-2 p-1">mode_edit</button>
-                            <button class="material-icons btn-danger btn-lg m-2 p-1">delete</button>
+                            <button class="material-icons btn-danger btn-lg m-2 p-1"   data-location="` + location + '" data-filename="'+ name+`">delete</button>
                         </div>
                     </nav>
                 </td>
