@@ -82,6 +82,7 @@ $(document).ready(function () {
 				}
                 navigationFolder();
 				linksForDashboard();
+				generateTopFolder(currentPath);
 			}
 		});
 	}
@@ -131,8 +132,9 @@ $(document).ready(function () {
 						newPath.pop();
 						currentPath = newPath.join('/');
 						displayFolderContent(currentPath);
+					} else {
+						history.back();
 					}
-
 				});
 
 			}
@@ -208,7 +210,21 @@ $(document).ready(function () {
             </tr>`;
 
 		$('tbody').append(output);
+	}
 
+	function generateTopFolder(path){
+		const anchor = $('.breadcrumb.navbar-dark.bg-dark');
+		anchor.empty();
+
+		let split = path.split('/');
+		split[0] = 'Home';
+
+
+		for (let i = 0; i < split.length - 1 ; i++) {
+			anchor.append('<li class="breadcrumb-item"><a href="#">'+split[i]+'</a></li>');
+		}
+
+		anchor.append('<li class="breadcrumb-item active" aria-current="page">'+split.slice(-1).pop()+'</li>');
 	}
 
 });
