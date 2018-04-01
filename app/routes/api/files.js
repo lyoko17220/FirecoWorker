@@ -7,10 +7,15 @@ const express = require('express'),
 	Download = require('../../db/schemas/download'),
 	Users = require('../../db/schemas/users');
 
-const upload = multer({
-		dest: '/firecodata/'
-	}),
-	type = upload.single('file');
+// TODO : si fichier existe, renommer au lieu de Date.now()
+let storage = multer.diskStorage({
+	destination: '/firecodata',
+	filename: (req, file, cb) =>{
+		cb(null, file.originalname + '_' + Date.now());
+	}
+});
+
+let upload = multer({ storage: storage}).single('fileUpload');
 
 files.post('/upload/request/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
@@ -80,22 +85,15 @@ files.get('/download/:user_token/:download_token', (req, res) => {
 	});
 });
 
-files.post('/upload/:user_token/:upload_token', type, (req, res) => {
+files.post('/upload/:user_token/:upload_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			Upload.findOne({'token': req.params.upload_token}).then((doc2) => {
 				if (doc2) {
-					let tmp_path = req.file.path,
-						target_path = '/firecodata/' + req.file.originalfilename;
-					let src = fs.createReadStream(tmp_path),
-						dest = fs.createWriteStream(target_path);
-					src.pipe(dest);
-					fs.unlink(tmp_path);
-					src.on('end', () => {
-						res.status(200).json({message: 'Fichier uploadé.'});
-					});
-					src.on('error', () => {
-						res.status(400).json({message: 'Upload raté.'});
+					upload(req, res, (err) =>{
+						if(err)
+							res.json(err);
+						res.json(req.file);
 					});
 				} else {
 					res.status(408).json({message: 'Délais d\'attente dépassé.'});
