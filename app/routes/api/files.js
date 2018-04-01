@@ -5,7 +5,6 @@ const express = require('express'),
 	fs = require('fs'),
 	Upload = require('../../db/schemas/upload'),
 	Download = require('../../db/schemas/download'),
-	path = require('path'),
 	Users = require('../../db/schemas/users');
 
 // TODO : si fichier existe, renommer au lieu de Date.now()
