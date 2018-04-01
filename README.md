@@ -9,12 +9,14 @@ Container applicatif de l'app Fireco
 Fireco est un service web servant aux stockage de données personnelles.
 
 
-## Docker container paramètres
+## Paramètres container Worker
 
-**Ports utilisés**
-- 80 : Interface web client
+**Paramètres utilisés**
 
-**W.I.P**
+- -p 8081 -> Pour la redirection de port de l’interface web du NAS
+- -p 27017 -> Administration du MongoDB à l’extérieur du container
+- -v /data -> Dossier des sources de l'app NodeJs
+- -v /dbmongo -> Dossier de rémanence des données de la db
 
 
 ## Auteurs
