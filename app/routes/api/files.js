@@ -32,7 +32,7 @@ files.post('/upload/request/:user_token', (req, res) => {
 				if (err) {
 					res.status(404).json({err});
 				}
-				res.json({token: upload_token});
+				res.status(200).json({token: upload_token});
 			});
 		} else {
 			res.status(401).json({message: 'Vous devez être connecté pour accéder à cette ressouce.'});
@@ -58,7 +58,7 @@ files.post('/download/request/:user_token', (req, res) => {
 				if (err) {
 					res.status(404).json({err});
 				}
-				res.json({token: download_token});
+				res.status(200).json({token: download_token});
 			});
 		} else {
 			res.status(401).send('Vous devez être connecté pour accéder à cette ressouce.');
@@ -92,8 +92,8 @@ files.post('/upload/:user_token/:upload_token', (req, res) => {
 				if (doc2) {
 					upload(req, res, (err) =>{
 						if(err)
-							res.json(err);
-						res.json(req.file);
+							res.status(400).json({message: 'Impossible de téléverser le fichier.'});
+						res.statut(200).json(req.file);
 					});
 				} else {
 					res.status(408).json({message: 'Délais d\'attente dépassé.'});
