@@ -7,19 +7,17 @@ Dashboard
 {% block content %}
 
 
-<div class="col-lg-8">
+<div class="col-10">
+
     <br> <br> <br>
+    <div  id="filetable">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb navbar-dark bg-dark">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Library</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Data</li>
         </ol>
     </nav>
 
-    <div class="row" id="filetable">
-        <table id="table" class="table table-sm table-striped table-bordered table-dark container " cellspacing="0"
-               width="100%">
+
+        <table id="table" class="table table-sm table-striped table-bordered table-dark container ">
             <thead class="text-center">
             <tr>
                 <th class="margin-left:10">Nom</th>
@@ -33,13 +31,41 @@ Dashboard
             <tr>
                 <td class="text-right" colspan="2">
                     <div class="text-right">
-                        <button class="material-icons btn-success text-right m-2 " id="test">file_upload</button>
-                        <button class="material-icons btn-success text-right m-2 ">create_new_folder</button>
+
+                 <input type="file" name="fileUpload" >
+                        <button class="material-icons btn-success text-right m-2 " data-toggle="modal" data-target="#exampleModal" id="createFolder">create_new_folder</button>
                     </div>
                 </td>
             </tr>
             </tfoot>
         </table>
+
+
+        <div class="modal fade text-dark text-left" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="newName" class="col-form-label">Nouveau nom:</label>
+                                <input type="text" class="form-control" id="newName">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-success" id="change">Changer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}
