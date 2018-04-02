@@ -397,7 +397,7 @@ Liste les fichiers d'un dossier.
 
 Demande d'adresse pour téléversement d'un fichier. Authentification obligatoire.
 
-​	**URL :** `/api/files/upload/request`
+​	**URL :** `/api/files/upload/request/:user_token`
 
 ​	**Methode :** `POST`
 

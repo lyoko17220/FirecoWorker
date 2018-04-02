@@ -5,13 +5,17 @@ const express = require('express'),
 	Users = require('../../db/schemas/users'),
 	rimraf = require('rimraf');
 
+// TODO : Déplacer fichiers et dossiers supprimés dans un dossier 'corbeille' - si l'utilisateur fait une fausse
+// TODO : manipulation, il peut toujours restaurer les fichiers / dossiers de la corbeille - si il veut supprimer
+// TODO : définitivement, il supprime le contenu de la corbeille
+
 folders.post('/create/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
 			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folderName;
 			fs.mkdir(folder_path, 0o777, (err) => {
 				if (err)
-					res.status(400).json({message: 'Le chemin d\'accès est incorrect ou le dossier existe déjà.'});
+					res.status(400).json({err});
 				res.status(200).json({message: 'Dossier créé.'});
 			});
 		} else {
