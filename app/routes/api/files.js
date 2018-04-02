@@ -7,6 +7,10 @@ const express = require('express'),
 	Download = require('../../db/schemas/download'),
 	Users = require('../../db/schemas/users');
 
+// TODO : Déplacer fichiers et dossiers supprimés dans un dossier 'corbeille' - si l'utilisateur fait une fausse
+// TODO : manipulation, il peut toujours restaurer les fichiers / dossiers de la corbeille - si il veut supprimer
+// TODO : définitivement, il supprime le contenu de la corbeille
+
 // TODO : si fichier existe, renommer au lieu de Date.now()
 let storage = multer.diskStorage({
 	destination: '/firecodata',

@@ -5,6 +5,10 @@ const express = require('express'),
 	Users = require('../../db/schemas/users'),
 	rimraf = require('rimraf');
 
+// TODO : Déplacer fichiers et dossiers supprimés dans un dossier 'corbeille' - si l'utilisateur fait une fausse
+// TODO : manipulation, il peut toujours restaurer les fichiers / dossiers de la corbeille - si il veut supprimer
+// TODO : définitivement, il supprime le contenu de la corbeille
+
 folders.post('/create/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
 		if (doc) {
