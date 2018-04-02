@@ -19,10 +19,10 @@ users.post('/sign', (req, res) => {
 			user.token = token;
 
 			user.save((err) => {
-				if (err) {
+				if (err)
 					res.status(400).json(err);
-				}
-				res.status(200).json({token: token});
+				else
+					res.status(200).json({token: token});
 			});
 		} else {
 			res.status(400).json({message: 'Utilisateur déjà existant.'});

@@ -10,8 +10,8 @@ devices.get('/:user_token', (req, res) => {
 			drivelist.list((err, drives) => {
 				if (err)
 					res.status(404).json({message: 'Ressource introuvable.'});
-
-				res.json(drives);
+				else
+					res.status(200).json(drives);
 			});
 		}else{
 			res.status(401).json({message: 'Vous devez être connecté pour accéder à cette ressouce.'});

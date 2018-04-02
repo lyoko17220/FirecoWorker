@@ -16,7 +16,8 @@ folders.post('/create/:user_token', (req, res) => {
 			fs.mkdir(folder_path, 0o777, (err) => {
 				if (err)
 					res.status(400).json({err});
-				res.status(200).json({message: 'Dossier créé.'});
+				else
+					res.status(200).json({message: 'Dossier créé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
@@ -31,7 +32,8 @@ folders.post('/delete/:user_token', (req, res) => {
 			rimraf(folder_path, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
-				res.status(200).json({message: 'Dossier supprimé.'});
+				else
+					res.status(200).json({message: 'Dossier supprimé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
@@ -46,7 +48,8 @@ folders.post('/rename/:user_token', (req, res) => {
 			fs.rename(folder_path + '/' + req.body.folderName, folder_path + '/' + req.body.newName, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
-				res.status(200).json({message: 'Dossier renommé.'});
+				else
+					res.status(200).json({message: 'Dossier renommé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});

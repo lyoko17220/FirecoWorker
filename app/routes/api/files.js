@@ -27,11 +27,10 @@ files.post('/upload/request/:user_token', (req, res) => {
 			upload.date = date.getTime();
 
 			upload.save((err) => {
-				if (err) {
+				if (err)
 					res.status(400).json({message: 'Le fichier n\'existe pas ou le chemin est incorrect.'});
-				}
-				//res.status(200).json({token: upload_token});
-				res.status(200).json(upload);
+				else
+					res.status(200).json({token: upload_token});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
@@ -54,10 +53,10 @@ files.post('/download/request/:user_token', (req, res) => {
 			download.period_end = date + 604800000;
 
 			download.save((err) => {
-				if (err) {
+				if (err)
 					res.status(404).json({err});
-				}
-				res.status(200).json({token: download_token});
+				else
+					res.status(200).json({token: download_token});
 			});
 		} else {
 			res.status(401).send('Vous devez être connecté pour accéder à cette ressouce.');
@@ -101,7 +100,8 @@ files.post('/upload/:user_token/:upload_token', (req, res) => {
 					upload(req, res, (err) =>{
 						if(err)
 							res.status(400).json({message: 'Impossible de téléverser le fichier.'});
-						res.status(200).json({message: 'Fichier uploadé.'});
+						else
+							res.status(200).json({message: 'Fichier uploadé.'});
 					});
 				} else {
 					res.status(408).json({message: 'Délais d\'attente dépassé.'});
@@ -120,7 +120,8 @@ files.post('/delete/:user_token', (req, res) => {
 			fs.unlink(file_path, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le fichier n\'existe pas ou le chemin d\'accès est incorrect.'});
-				res.status(200).json({message: 'Fichier supprimé.'});
+				else
+					res.status(200).json({message: 'Fichier supprimé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
@@ -135,7 +136,8 @@ files.post('/rename/:user_token', (req, res) => {
 			fs.rename(file_path + '/' + req.body.file_name, file_path + '/' + req.body.new_file_name, (err) => {
 				if (err)
 					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
-				res.status(200).json({message: 'Dossier renommé.'});
+				else
+					res.status(200).json({message: 'Dossier renommé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
