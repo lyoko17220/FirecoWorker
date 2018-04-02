@@ -74,7 +74,7 @@ files.get('/download/:user_token/:download_token', (req, res) => {
 
 					res.download(folder + '/' + filename, filename);
 				} else {
-					res.json({message: 'Impossible de télécharger le fichier'});
+					res.json({message: 'Impossible de télécharger le fichier.'});
 				}
 			});
 		} else {
@@ -135,9 +135,9 @@ files.post('/rename/:user_token', (req, res) => {
 			let file_path = '/firecodata' + req.body.path;
 			fs.rename(file_path + '/' + req.body.file_name, file_path + '/' + req.body.new_file_name, (err) => {
 				if (err)
-					res.status(400).json({message: 'Le dossier n\'existe pas ou le chemin d\'accès est incorrect.'});
+					res.status(400).json({message: 'Le fichier n\'existe pas ou le chemin d\'accès est incorrect.'});
 				else
-					res.status(200).json({message: 'Dossier renommé.'});
+					res.status(200).json({message: 'Fichier renommé.'});
 			});
 		} else {
 			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
