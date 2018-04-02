@@ -11,15 +11,8 @@ const express = require('express'),
 // TODO : manipulation, il peut toujours restaurer les fichiers / dossiers de la corbeille - si il veut supprimer
 // TODO : définitivement, il supprime le contenu de la corbeille
 
-// TODO : si fichier existe, renommer au lieu de Date.now()
-let storage = multer.diskStorage({
-	destination: '/firecodata',
-	filename: (req, file, cb) =>{
-		cb(null, file.originalname + '_' + Date.now());
-	}
-});
+// TODO : Ajouter un blocage. 1 requête = 1 action
 
-let upload = multer({ storage: storage}).single('fileUpload');
 
 files.post('/upload/request/:user_token', (req, res) => {
 	Users.findOne({'token': req.params.user_token}).then((doc) => {
@@ -28,18 +21,20 @@ files.post('/upload/request/:user_token', (req, res) => {
 			let date = new Date();
 			let upload_token = token.generate(16);
 
+			upload.path = req.body.path;
 			upload.user_token = doc._id;
 			upload.token = upload_token;
 			upload.date = date.getTime();
 
 			upload.save((err) => {
 				if (err) {
-					res.status(404).json({err});
+					res.status(400).json({message: 'Le fichier n\'existe pas ou le chemin est incorrect.'});
 				}
-				res.status(200).json({token: upload_token});
+				//res.status(200).json({token: upload_token});
+				res.status(200).json(upload);
 			});
 		} else {
-			res.status(401).json({message: 'Vous devez être connecté pour accéder à cette ressouce.'});
+			res.status(401).json({message: 'Une authentification est requise pour effectuer cette action.'});
 		}
 	});
 });
@@ -94,10 +89,19 @@ files.post('/upload/:user_token/:upload_token', (req, res) => {
 		if (doc) {
 			Upload.findOne({'token': req.params.upload_token}).then((doc2) => {
 				if (doc2) {
+					let storage = multer.diskStorage({
+						destination: '/firecodata' + doc2.path,
+						filename: (req, file, cb) =>{
+							cb(null, file.originalname + '_' + Date.now());
+						}
+					});
+
+					let upload = multer({ storage: storage}).single('fileUpload');
+
 					upload(req, res, (err) =>{
 						if(err)
 							res.status(400).json({message: 'Impossible de téléverser le fichier.'});
-						res.statut(200).json(req.file);
+						res.status(200).json({message: 'Fichier uploadé.'});
 					});
 				} else {
 					res.status(408).json({message: 'Délais d\'attente dépassé.'});

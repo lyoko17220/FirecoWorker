@@ -15,7 +15,7 @@ folders.post('/create/:user_token', (req, res) => {
 			let folder_path = '/firecodata' + req.body.path + '/' + req.body.folderName;
 			fs.mkdir(folder_path, 0o777, (err) => {
 				if (err)
-					res.status(400).json({message: 'Le chemin d\'accès est incorrect ou le dossier existe déjà.'});
+					res.status(400).json({err});
 				res.status(200).json({message: 'Dossier créé.'});
 			});
 		} else {
