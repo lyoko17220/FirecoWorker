@@ -108,9 +108,11 @@ $(document).ready(function () {
             },
             dataType: 'json',
             success: function (data) {
-                //console.log(data);
+                console.log(data);
                 for (let j in data.content) {
                     if (data.content[j].type === 'folder') {
+                        if (data.content[j].path === '')
+	                        data.content[j].path = '/';
                         displayFolder(data.content[j].name, data.content[j].path);
                     }
                     else {
@@ -177,19 +179,22 @@ $(document).ready(function () {
         });
 
         $('.material-icons.btn-success.btn-lg.m-2.p-1.downloadFile').on('click', function () {
-			const path = $(this).attr('data-location');
-			const filename = $(this).attr('data-name');
+	        const path = $(this).attr('data-location');
+	        const filename = $(this).attr('data-name');
+
+	        console.log ('P' + path + ' -- ' +filename);
 
 			$.ajax({
                url: '/api/files/download/request/' + log,
                 type: 'POST',
                 dataType: 'json',
                 data: {
-                    folder: path,
+                    folder: currentPath,
                     filename: filename,
                 },
                 success: function (data) {
-                   window.location.href = '/api/files/download/' + log + '/' + data.token
+                   console.log(data);
+                   window.location.href = '/api/files/download/' + log + '/' + data.token;
 				},
 				error: function () {
 					$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-success fade show" >
@@ -360,7 +365,7 @@ $(document).ready(function () {
                         </button>
                         <div class="collapse navbar-collapse" id="groupBtn">
                            <!--<button class="material-icons btn-info btn-lg m-2 p-1">info</button>!-->
-                            <button class="material-icons btn-success btn-lg m-2 p-1 downloadFile" >file_download</button>
+                            <button class="material-icons btn-success btn-lg m-2 p-1 downloadFile"  data-name="` + name + '" data-location="' + location + `"  >file_download</button>
                             <button class="material-icons btn-primary btn-lg m-2 p-1 editFile"   data-toggle="modal" data-target="#exampleModal" data-name="` + name + '" data-location="' + location + `" >mode_edit</button>
                             <button class="material-icons btn-danger btn-lg m-2 p-1 deleteFile" data-location="` + location + '" data-name="' + name + `" >delete</button>
                         </div>
