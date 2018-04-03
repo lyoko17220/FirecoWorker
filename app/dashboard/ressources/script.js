@@ -20,6 +20,7 @@ $(document).ready(function () {
                 lastname: $('#lastname').val()
             }
         });
+        //document.location = '/view/dashboard';
     });
 
     /**
@@ -174,6 +175,29 @@ $(document).ready(function () {
             });
 
         });
+
+        $('.material-icons.btn-success.btn-lg.m-2.p-1.downloadFile').on('click', function () {
+			const path = $(this).attr('data-location');
+			const filename = $(this).attr('data-name');
+
+			$.ajax({
+               url: '/api/files/download/request/' + log,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    folder: path,
+                    filename: filename,
+                },
+                success: function (data) {
+                   window.location.href = '/api/files/download/' + log + '/' + data.token
+				},
+				error: function () {
+					$('#alert').html(`<div id="alert" class="alert alert-dismissable alert-success fade show" >
+					<span> Le fichier ` + filename + ` n'a pas pu être téléchargé.</span>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>`);
+				},
+            });
+		});
 
         $('.material-icons.btn-primary.btn-lg.m-2.p-1.editFile').on('click', function () {
             const path = $(this).attr('data-location');
